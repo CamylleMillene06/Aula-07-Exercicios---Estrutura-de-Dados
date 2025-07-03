@@ -1,0 +1,60 @@
+# Classe que implementa uma fila (Queue) com lista encadeada
+class Fila:
+    def _init_(self):
+        self.itens = []
+
+# Adiciona um cliente ao final da fila
+    def enqueue(self, item):
+        self.itens.append(item)
+
+# Remove o cliente do início da fila (quem chegou primeiro)
+    def dequeue(self):
+        if not self.esta_vazia():
+            return self.itens.pop(0)
+        return None
+
+# Verifica se a fila está vazia
+    def esta_vazia(self):
+        return len(self.itens) == 0
+
+# Mostra o estado atual da fila
+    def mostrar_fila(self):
+        if self.esta_vazia():
+            print("Fila vazia.")
+        else:
+            print("Fila atual:", " -> ".join(self.itens))
+
+
+# Função para adicionar um novo cliente à fila
+def novo_cliente(fila, nome_cliente):
+    print(f"Novo cliente chegou: {nome_cliente}")
+    fila.enqueue(nome_cliente)
+    fila.mostrar_fila()
+
+
+# Função para atender o próximo cliente da fila
+def atender_cliente(fila):
+    if fila.esta_vazia():
+        print("Nenhum cliente para atender.")
+    else:
+        cliente = fila.dequeue()
+        print(f"Atendendo cliente: {cliente}")
+        fila.mostrar_fila()
+
+# Criando a fila de atendimento
+fila_atendimento = Fila()
+
+# 1. Adicionando 3 clientes
+novo_cliente(fila_atendimento, "João")
+novo_cliente(fila_atendimento, "Camylle")
+novo_cliente(fila_atendimento, "Eduarda")
+
+# 2. Atendendo um cliente
+atender_cliente(fila_atendimento)
+
+# 3. Adicionando mais um cliente
+novo_cliente(fila_atendimento, "Samara")
+
+# 4. Atendendo todos até a fila ficar vazia
+while not fila_atendimento.esta_vazia():
+    atender_cliente(fila_atendimento)
