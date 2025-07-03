@@ -1,0 +1,73 @@
+# Definindo a classe de Pilha
+class Pilha:
+  def _init_(self):
+      self.itens = []
+
+  def push(self, item):
+      self.itens.append(item)
+
+  def pop(self):
+      if not self.esta_vazia():
+        return self.itens.pop()
+        return None
+
+  def esta_vazia(self):
+      return len(self.itens) == 0
+
+  def limpar(self):
+      self.itens.clear()
+
+
+# Classe que simula um Navegador com histórico
+class Navegador:
+  def _init_(self, pagina_inicial):
+      self.historico_voltar = Pilha()
+      self.historico_avancar = Pilha()
+      self.pagina_atual = pagina_inicial
+      print(f"🌐 Navegador iniciado em: {self.pagina_atual}")
+
+  def visitar_pagina(self, url):
+     self.historico_voltar.push(self.pagina_atual)
+     self.pagina_atual = url
+     self.historico_avancar.limpar()
+     print(f"➡️ Visitando: {self.pagina_atual}")
+
+  def voltar(self):
+    if self.historico_voltar.esta_vazia():
+    print("⛔ Não há páginas anteriores para voltar.")
+      else:
+      self.historico_avancar.push(self.pagina_atual)
+      self.pagina_atual = self.historico_voltar.pop()
+      print(f"🔙 Voltou para: {self.pagina_atual}")
+
+def avancar(self):
+  if self.historico_avancar.esta_vazia():
+  print("⛔ Não há páginas para avançar.")
+    else:
+    self.historico_voltar.push(self.pagina_atual)
+    self.pagina_atual = self.historico_avancar.pop()
+    print(f"🔜 Avançou para: {self.pagina_atual}")
+
+def mostrar_pagina_atual(self):
+  print(f"📍 Página atual: {self.pagina_atual}")
+
+navegador = Navegador("google.com")
+
+navegador.visitar_pagina("youtube.com")
+navegador.visitar_pagina("netflix.com")
+navegador.visitar_pagina("canva.com")
+navegador.visitar_pagina("amazon.com")
+
+navegador.voltar()      # volta para canva.com
+navegador.voltar()      # volta para netflix.com
+
+navegador.avancar()     # avança para canva.com
+
+navegador.visitar_pagina("openai.com")  # limpa o histórico de avançar
+
+navegador.voltar()      # volta para canva.com
+navegador.voltar()      # volta para netflix.com
+navegador.avancar()     # avança para canva.com
+navegador.avancar()     # avança para openai.com
+
+navegador.mostrar_pagina_atual()
