@@ -1,0 +1,77 @@
+class FilaDePrioridade:
+    def __init__(self):
+        """
+        Inicializa a fila como uma lista vazia.
+        Cada item da fila será uma tupla: (dado, prioridade)
+        """
+        self.fila = []
+
+    def enqueue(self, dado, prioridade):
+        """
+        Adiciona um item na fila de acordo com a prioridade.
+        Menor número = maior prioridade.
+        A posição de inserção depende da prioridade.
+        """
+        novo_item = (dado, prioridade)
+        
+# Se a fila estiver vazia, adicionamos direto
+        if not self.fila:
+            self.fila.append(novo_item)
+            return
+
+# Procuramos a posição correta para inserir
+        inserido = False
+        for i in range(len(self.fila)):
+            item_existente = self.fila[i]
+
+            # Se a prioridade do novo item for menor (maior prioridade),
+            # inserimos ele ANTES do item atual
+            if prioridade < item_existente[1]:
+                self.fila.insert(i, novo_item)
+                inserido = True
+                break
+            # Se for igual ou maior, seguimos procurando.
+            # Isso garante que prioridades iguais mantenham a ordem FIFO.
+
+# Se não encontrou posição (maior prioridade que todos), adiciona no final
+        if not inserido:
+            self.fila.append(novo_item)
+
+    def dequeue(self):
+        """
+        Remove e retorna o item com maior prioridade (primeiro da fila).
+        Se a fila estiver vazia, retorna None.
+        """
+        if not self.fila:
+            return None
+        # Remove o primeiro item da fila (maior prioridade)
+        return self.fila.pop(0)[0]  # Retorna apenas o dado (não a prioridade)
+
+    def __str__(self):
+        """
+        Retorna uma representação da fila (útil para debug).
+        """
+        return str(self.fila)
+        
+# Criar a fila de prioridade
+fila = FilaDePrioridade()
+
+# Inserir os dados conforme exemplo da imagem
+fila.enqueue("Relatório Urgente", 1)
+fila.enqueue("Documento Normal", 5)
+fila.enqueue("E-mail Rápido", 2)
+
+# Mostrar a fila ordenada por prioridade
+print(" Fila atual:")
+print(fila)  
+# Esperado: [("Relatório Urgente", 1), ("E-mail Rápido", 2), ("Documento Normal", 5)]
+
+# Remover o primeiro item (de maior prioridade)
+print("\n Item atendido (dequeue):")
+print(fila.dequeue())  
+# Esperado: "Relatório Urgente"
+
+# Mostrar a fila após a remoção
+print("\n Fila após um dequeue:")
+print(fila)  
+# Esperado: [("E-mail Rápido", 2), ("Documento Normal", 5)]
