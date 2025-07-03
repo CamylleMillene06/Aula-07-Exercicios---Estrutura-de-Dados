@@ -1,0 +1,62 @@
+import random
+
+# Classe que simula uma fila (Queue)
+class Fila:
+    def _init_(self):
+        self.itens = []
+
+    def enqueue(self, item):
+        self.itens.append(item)  # Adiciona no fim da fila
+
+    def dequeue(self):
+        if not self.esta_vazia():
+            return self.itens.pop(0)  # Remove do início da fila
+
+    def esta_vazia(self):
+        return len(self.itens) == 0
+
+    def tamanho(self):
+        return len(self.itens)
+
+    def mostrar_fila(self):
+        print("Fila:", " → ".join(self.itens))
+
+
+# Função que simula o jogo da batata quente
+def simular_batata_quente(lista_nomes, num_passes):
+    fila = Fila()
+
+# Adiciona todos os nomes na fila
+    for nome in lista_nomes:
+        fila.enqueue(nome)
+
+    print("Iniciando o jogo da batata quente!\n")
+
+# Enquanto houver mais de uma pessoa na fila
+    while fila.tamanho() > 1:
+        print("Nova rodada:")
+        fila.mostrar_fila()
+
+# Passando a batata: move o primeiro para o final da fila num_passes vezes
+        for _ in range(num_passes):
+            nome = fila.dequeue()
+            fila.enqueue(nome)
+            print(f"Passando a batata para {nome}")
+
+# Quem está na frente após os passes é eliminado
+        eliminado = fila.dequeue()
+        print(f"🔥 {eliminado} ficou com a batata e foi eliminado!\n")
+
+# Quem sobrou é o vencedor
+    vencedor = fila.dequeue()
+    print(f"🎉 O vencedor é: {vencedor}")
+    return vencedor
+
+# Lista de nomes
+nomes = ["João", "Camylle", "Eduarda", "Samara", "Sebastião"]
+
+# Número de passes (quantas vezes a batata será passada por rodada)
+num_passes = 7
+
+# Chamada da função para simular o jogo
+simular_batata_quente(nomes, num_passes)
